@@ -330,14 +330,19 @@
                 contentType: "application/json; charset=UTF-8",
                 success: function(data) {
                     console.log(data)
+                    var val = "High-Level"
+                    if (data.data == 2)
+                        val = "Mediuem-Level"
+                    else if (data.data == 1)
+                        val = "Low-Level"
+                    $("#prediction").text(val);
                 },
                 error: function(data) {
 
                 }
             })
 
-            var val = "High-Level"
-            $("#prediction").text(val);
+
             $("#prediction").show();
             $("#student_modal").modal('hide');
         });
