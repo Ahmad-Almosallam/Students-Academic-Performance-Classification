@@ -14,7 +14,9 @@
 
     <!-- Main page -->
     <div class="container-fluid" id="main_page" style="height: 980px;">
-        <h3 class="d-flex flex-row justify-content-center mt-5" style="display: none;" id="prediction"></h3>
+        <h3 class="d-flex flex-row justify-content-center mt-5" style="display: none;" id="prediction">
+
+        </h3>
         <div class="row h-100 align-items-center">
             <div class="col-6 d-flex flex-row justify-content-center ml" id="student">
                 <div class="card" style="width: 40rem; cursor: pointer;">
@@ -329,13 +331,16 @@
                 }),
                 contentType: "application/json; charset=UTF-8",
                 success: function(data) {
-                    console.log(data)
-                    var val = "High-Level"
+                    var pred = " High-Level "
                     if (data.data == 2)
-                        val = "Mediuem-Level"
+                        pred = " Medium-Level "
                     else if (data.data == 1)
-                        val = "Low-Level"
-                    $("#prediction").text(val);
+                        pred = " Low-Level "
+
+                    $("#prediction").show();
+                    $("#prediction").text("Predection is that this student is considered as a ");
+                    $("#prediction").append(" <span class='text-danger'>&#8203; " + pred + " &#8203;</span> student");
+
                 },
                 error: function(data) {
 
@@ -343,7 +348,7 @@
             })
 
 
-            $("#prediction").show();
+
             $("#student_modal").modal('hide');
         });
 
