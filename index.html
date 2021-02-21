@@ -18,7 +18,7 @@
 
         </h3>
         <div class="row h-100 align-items-center">
-            <div class="col-6 d-flex flex-row justify-content-center ml" id="student">
+            <div class="col-lg-6 col-sm-12 d-flex flex-row justify-content-center ml" id="student">
                 <div class="card" style="width: 40rem; cursor: pointer;">
                     <img class="card-img-top" src="https://www.sansone-ac.com/wp-content/uploads/2016/09/Does-Classroom-Temperature-Affect-Students-Performance-794x530.jpg" alt="Card image cap">
                     <div class="card-body">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6 d-flex flex-row justify-content-center ml" id="land">
+            <div class="col-lg-6 col-sm-12 d-flex flex-row justify-content-center ml" id="land">
                 <div class="card" style="width: 40rem; cursor: pointer;">
                     <img class="card-img-top" src="https://www.mikestarks.com/wp-content/uploads/2017/07/land-price.jpg" alt="Card image cap">
                     <div class="card-body">
@@ -39,7 +39,7 @@
 
     <!-- student modal -->
     <div class="modal" tabindex="-1" role="dialog" id="student_modal">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Student's Academic Performance Classification</h5>
@@ -278,7 +278,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
     <script>
         $(".ml").click(function() {
             var id = $(this).attr("id");
@@ -290,7 +290,7 @@
         });
 
         $("#predict_student").click(function() {
-
+            $("#prediction").text(" ");
             var gender = $("#gender").val();
             var Nationalty = $("#Nationalty").val();
             var place_of_birth = $("#pob").val();
@@ -307,6 +307,7 @@
             var visted_resource = $("#visted_resource").val() / 100;
             var AnnouncementsView = $("#AnnouncementsView").val() / 100;
             var Discussion = $("#Discussion").val() / 100;
+            $.LoadingOverlay("show");
             $.ajax({
                 url: "https://hw3-machine-learning.herokuapp.com/student_performance_prediction",
                 type: "POST",
@@ -337,9 +338,12 @@
                     else if (data.data == 1)
                         pred = " Low-Level "
 
-                    $("#prediction").show();
-                    $("#prediction").text("Predection is that this student is considered as a ");
-                    $("#prediction").append(" <span class='text-danger'>&#8203; " + pred + " &#8203;</span> student");
+                    setTimeout(function() {
+                        $.LoadingOverlay("hide");
+                        $("#prediction").show();
+                        $("#prediction").append(" <span class='text-danger'>&#8203; " + pred + " &#8203;</span> student");
+                    }, 500);
+
 
                 },
                 error: function(data) {
